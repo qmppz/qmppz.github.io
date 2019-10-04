@@ -1,10 +1,10 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Categories - My New Hugo Site</title>
+    <title>Categories - qmppz 历程</title>
     <link>http://qmppz.github.io/categories/</link>
-    <description>Recent content in Categories on My New Hugo Site</description>
+    <description>Recent content in Categories on qmppz 历程</description>
     <generator>Hugo -- gohugo.io</generator>
-    <language>en-us</language>
+    <language>zh-cn</language>
     
         <atom:link href="http://qmppz.github.io/categories/index.xml" rel="self" type="application/rss+xml" />
     
