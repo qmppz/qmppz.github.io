@@ -1,19 +1,19 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Posts - My New Hugo Site</title>
-    <link>http://coderzh.github.io/post/</link>
+    <link>http://qmppz.github.io/post/</link>
     <description>Recent content in Posts on My New Hugo Site</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     
-        <atom:link href="http://coderzh.github.io/post/index.xml" rel="self" type="application/rss+xml" />
+        <atom:link href="http://qmppz.github.io/post/index.xml" rel="self" type="application/rss+xml" />
     
     <item>
       <title></title>
-      <link>http://coderzh.github.io/post/igtl-again/</link>
+      <link>http://qmppz.github.io/post/igtl-again/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>http://coderzh.github.io/post/igtl-again/</guid>
+      <guid>http://qmppz.github.io/post/igtl-again/</guid>
       <description>20190722:第一次编写
  写在前面   igotolibrary - github : https://github.com/qmppz/igotolibrary  上一个版本【我去图书馆-抢座助手】:https://blog.csdn.net/RenjiaLu9527/article/details/79871288  sessionid 抓包与指令集帮助：https://dwz.cn/DueaPBVD    【我去图书馆】、【来选座】这类公众号借助微信的平台提供预约座位的服务，本意是方便大家
 但是防护验证措施比较弱
