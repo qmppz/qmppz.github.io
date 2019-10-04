@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en-us" dir="ltr">
+  <head>
+  <meta charset="utf-8" />
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <title>Posts &middot; My New Hugo Site</title>
+  <meta name="description" content="" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/katex.min.css" integrity="sha384-9eLZqc9ds8eNjO3TmqPeYcDj8n+Qfa4nuSiGYa6DjLNcv9BtN69ZIulL9+8CqC9Y" crossorigin="anonymous">
+  
+  
+  
+  
+  
+  <link href="http://coderzh.github.io/css/concated.min.css" rel="stylesheet">
+  <link rel="alternate" type="application/rss+xml" href="http://coderzh.github.io/post/index.xml" title="My New Hugo Site" />
+  
+  
+</head>
+
+  <body class="list-body">
+    <nav class="nav-bar side-padding">
+  <h1 class="nav-header"><a href="http://coderzh.github.io/" class="nav-text">My New Hugo Site</a></h1>
+  <div class="hamburger-menu">
+    <button onclick="hamburgerMenuPressed.call(this)" aria-haspopup="true" aria-expanded="false" aria-controls="menu" aria-label="Menu">
+      <span></span>
+      <span></span>
+    </button>
+    <ul id="menu" class="hamburger-menu-overlay">
+      <li><a href="http://coderzh.github.io/" class="hamburger-menu-overlay-link">Home</a></li>
+      
+      
+    </ul>
+  </div>
+</nav>
+
+    <main class="card-container side-gutter">
+      <header class="list-header">
+        
+        <h1 class="list-header-title">Posts</h1>
+      </header>
+      
+      
+      
+      <a ontouchstart="cardPressed.call(this)" ontouchend="cardReleased.call(this)" ontouchmove="cardReleased.call(this)" 
+  href="http://coderzh.github.io/post/igtl-again/" class="card blog-card" rel="bookmark" >
+  
+  <article class="card-body">
+    <h2 class="card-title"></h2>
+    <p class="card-text">20190722:第一次编写
+ 写在前面   igotolibrary - github : https://github.com/qmppz/igotolibrary  上一个版本【我去图书馆-抢座助手】:https://blog.csdn.net/RenjiaLu9527/article/details/79871288  sessionid 抓包与指令集帮助：https://dwz.cn/DueaPBVD    【我去图书馆】、【来选座】这类公众号借助微信的平台提供预约座位的服务，本意是方便大家
+但是防护验证措施比较弱
+由此带来的结果就是总是有人在“闷声发大财”偷偷使用程序抢座，这明显的不公平
+以现在的防护验证强度推测，自习室座位越紧张的学校，使用外挂抢座的越多；
+只是没有人公开源码
+抢座主逻辑详解 1. 流程  1，抓包，获取通信交互数据 2，分析参数，尝试离线构造参数 3，py模拟提交测试
+ 2. 关键函数 function: reserve_a_seat
+# reserve a seat @utils.catch_exception def reserve_a_seat(self, libid='', coordinate='', pre_or_today=pre): key_seat_page = pre_seatmap_page verify_key = verify_key url_prefix = url_prefix_pre seatmap_pageurl = seatmap_pageurl_pre seatmap_page_html = utils.get_response( url=seatmap_pageurl, sess=self.sess, m_headers=self.CF.M_HEADERS_PRE_RESERVE, m_cookies=self.CF.M_COOKIES, verify_key=verify_key) if not seatmap_page_html: return False soup = BeautifulSoup(seatmap_page_html, 'html.</p>
+    <div class="card-subtext muted-text">
+      <p>Posted <time datetime="0001-01-01">Jan 1, 0001</time></p>
+      
+    </div>
+  </article>
+</a>
+    </main>
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.13.1/highlight.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/katex.min.js" integrity="sha384-K3vbOmF2BtaVai+Qk37uypf7VrgBubhQreNQe9aGsz9lB63dIFiQVlJbr92dw2Lx" crossorigin="anonymous"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/contrib/auto-render.min.js" integrity="sha384-kmZOZB5ObwgQnS/DuDg6TScgOiWWBiVt0plIRkZCmE6rDZGrEOQeHM5PcHi+nyqe" crossorigin="anonymous"
+    onload="renderMathInElement(document.body);"></script>
+  
+  <script src="http://coderzh.github.io/js/core.min.js"></script>
+<script>
+  hljs.initHighlightingOnLoad();
+</script>
+
+  </body>
+</html>

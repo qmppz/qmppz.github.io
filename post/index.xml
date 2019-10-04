@@ -1,0 +1,28 @@
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Posts - My New Hugo Site</title>
+    <link>http://coderzh.github.io/post/</link>
+    <description>Recent content in Posts on My New Hugo Site</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    
+        <atom:link href="http://coderzh.github.io/post/index.xml" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title></title>
+      <link>http://coderzh.github.io/post/igtl-again/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>http://coderzh.github.io/post/igtl-again/</guid>
+      <description>20190722:第一次编写
+ 写在前面   igotolibrary - github : https://github.com/qmppz/igotolibrary  上一个版本【我去图书馆-抢座助手】:https://blog.csdn.net/RenjiaLu9527/article/details/79871288  sessionid 抓包与指令集帮助：https://dwz.cn/DueaPBVD    【我去图书馆】、【来选座】这类公众号借助微信的平台提供预约座位的服务，本意是方便大家
+但是防护验证措施比较弱
+由此带来的结果就是总是有人在“闷声发大财”偷偷使用程序抢座，这明显的不公平
+以现在的防护验证强度推测，自习室座位越紧张的学校，使用外挂抢座的越多；
+只是没有人公开源码
+抢座主逻辑详解 1. 流程  1，抓包，获取通信交互数据 2，分析参数，尝试离线构造参数 3，py模拟提交测试
+ 2. 关键函数 function: reserve_a_seat
+# reserve a seat @utils.catch_exception def reserve_a_seat(self, libid=&#39;&#39;, coordinate=&#39;&#39;, pre_or_today=pre): key_seat_page = pre_seatmap_page verify_key = verify_key url_prefix = url_prefix_pre seatmap_pageurl = seatmap_pageurl_pre seatmap_page_html = utils.get_response( url=seatmap_pageurl, sess=self.sess, m_headers=self.CF.M_HEADERS_PRE_RESERVE, m_cookies=self.CF.M_COOKIES, verify_key=verify_key) if not seatmap_page_html: return False soup = BeautifulSoup(seatmap_page_html, &#39;html.</description>
+    </item>
+  </channel>
+</rss>

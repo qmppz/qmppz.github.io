@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en-us" dir="ltr">
+  <head>
+  <meta charset="utf-8" />
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <title>My New Hugo Site</title>
+  <meta name="description" content="" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/katex.min.css" integrity="sha384-9eLZqc9ds8eNjO3TmqPeYcDj8n+Qfa4nuSiGYa6DjLNcv9BtN69ZIulL9+8CqC9Y" crossorigin="anonymous">
+  
+  
+  
+  
+  
+  <link href="http://coderzh.github.io/css/concated.min.css" rel="stylesheet">
+  
+  
+</head>
+
+  <body class="single-body">
+    <nav class="nav-bar side-padding">
+  <h1 class="nav-header"><a href="http://coderzh.github.io/" class="nav-text">My New Hugo Site</a></h1>
+  <div class="hamburger-menu">
+    <button onclick="hamburgerMenuPressed.call(this)" aria-haspopup="true" aria-expanded="false" aria-controls="menu" aria-label="Menu">
+      <span></span>
+      <span></span>
+    </button>
+    <ul id="menu" class="hamburger-menu-overlay">
+      <li><a href="http://coderzh.github.io/" class="hamburger-menu-overlay-link">Home</a></li>
+      
+      
+    </ul>
+  </div>
+</nav>
+
+    <main class="content side-text-padding">
+      <article class="post dropcase">
+        <header class="post-header">
+        	<h1 class="post-title"></h1>
+          
+        </header>
+        
+        
+
+<blockquote>
+<p>20190722:第一次编写</p>
+</blockquote>
+
+<hr />
+
+<h1 id="写在前面">写在前面</h1>
+
+<blockquote>
+<ul>
+<li><strong>igotolibrary - github</strong> : <a href="https://github.com/qmppz/igotolibrary">https://github.com/qmppz/igotolibrary</a>
+
+<ul>
+<li><strong>上一个版本【我去图书馆-抢座助手】:</strong><a href="https://blog.csdn.net/RenjiaLu9527/article/details/79871288">https://blog.csdn.net/RenjiaLu9527/article/details/79871288</a></li>
+</ul></li>
+<li><strong>sessionid 抓包与指令集帮助：</strong><a href="https://dwz.cn/DueaPBVD">https://dwz.cn/DueaPBVD </a></li>
+</ul>
+</blockquote>
+
+<p>【我去图书馆】、【来选座】这类公众号借助微信的平台提供预约座位的服务，本意是方便大家</p>
+
+<p>但是防护验证措施比较弱</p>
+
+<p>由此带来的结果就是总是有人在“闷声发大财”偷偷使用程序抢座，这明显的不公平</p>
+
+<p>以现在的防护验证强度推测，自习室座位越紧张的学校，使用外挂抢座的越多；</p>
+
+<p>只是没有人公开源码</p>
+
+<hr />
+
+<h1 id="抢座主逻辑详解">抢座主逻辑详解</h1>
+
+<h2 id="1-流程">1. 流程</h2>
+
+<blockquote>
+<p>1，抓包，获取通信交互数据
+2，分析参数，尝试离线构造参数
+3，py模拟提交测试</p>
+</blockquote>
+
+<h2 id="2-关键函数">2. 关键函数</h2>
+
+<p>function: <strong><em>reserve_a_seat</em></strong></p>
+
+<pre><code class="language-python"># reserve a seat
+@utils.catch_exception
+def reserve_a_seat(self, libid='', coordinate='', pre_or_today=pre):
+   key_seat_page = pre_seatmap_page
+   verify_key = verify_key
+   url_prefix = url_prefix_pre
+   seatmap_pageurl = seatmap_pageurl_pre
+   seatmap_page_html = utils.get_response(
+       url=seatmap_pageurl, sess=self.sess,
+       m_headers=self.CF.M_HEADERS_PRE_RESERVE, m_cookies=self.CF.M_COOKIES, verify_key=verify_key)
+   if not seatmap_page_html:
+       return False
+   soup = BeautifulSoup(seatmap_page_html, 'html.parser')
+   hexch_js_code = requests.get([e for e in soup.find_all('script') if
+          str(e).find(cache_layout_url) &gt;= 0][0]['src'], verify=False)
+   hexch_js_code.encoding='utf8'
+   ajax_url = re.compile(r'(?&lt;=[A-Z]\.ajax_get\().*?(?=,)').search(hexch_js_code.text).group(0).replace('AJAX_URL', url_prefix)
+   hexch_js_code = re.sub(r'[A-Z]\.ajax_get', 'return %s ; T.ajax_get' % ajax_url, hexch_js_code.text)
+   http_hexch_seatinfo = execjs.compile(hexch_js_code).call('reserve_seat', str(libid), coordinate)
+   response = self.sess.get(http_hexch_seatinfo, proxies=utils.get_proxy(), headers=self.CF.M_HEADERS_PRE_RESERVE, cookies=self.CF.M_COOKIES, verify=False)
+   # return 
+   return verify_response(response.text)
+</code></pre>
+
+<p><strong>步骤流程图</strong>
+<img src="https://img-blog.csdnimg.cn/2019072212444496.jpg?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L1JlbmppYUx1OTUyNw==,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述" /></p>
+
+<h2 id="3-参数获取">3. 参数获取</h2>
+
+<p>上述流程的<strong>关键</strong>就是如何解析得到 <code>hex_code</code>
+<img src="https://img-blog.csdnimg.cn/20190722134424150.png" alt="在这里插入图片描述" /></p>
+
+<pre><code class="language-html">//抢座 url
+https://wechat.v2.traceint.com/index.php/prereserve/save/libid=1234&amp;sESx8nLBnQHh=128,63&amp;yzm=	
+</code></pre>
+
+<p>这是一段加密的 <code>hex_code</code>，这应该是为了修复的上一个版本的爬虫漏洞，而新加的验证字段，每次请求都会变；</p>
+
+<p>但是仔细分析【我去图书馆】首页的 html，可以发现有三个 <code>&lt;script</code>，其中的一个url便是生成 <code>hex_code</code>的 js 文件的 url；
+<img src="https://img-blog.csdnimg.cn/20190722131515873.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L1JlbmppYUx1OTUyNw==,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述" />
+打开这个url，可以<strong>清晰</strong>的看到这个<strong>顾名思义</strong>的函数:</p>
+
+<p><strong>reserve_seat</strong>
+<img src="https://img-blog.csdnimg.cn/2019072213194248.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L1JlbmppYUx1OTUyNw==,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述" />
+所以只要每次去获取这段加密 js 代码，直接使用<code>python-execjs</code>模块执行js即可得到<code>hex_code</code></p>
+
+<p>然后提交get请求即可抢座。</p>
+
+<p>到这里我就有了点疑问：</p>
+
+<blockquote>
+<h3 id="为何添加了-hex-code-字段-却又把生成这个字段的函数-reserve-seat-简单直白清晰的放在旁边">为何添加了<code>hex_code</code>字段，却又把生成这个字段的函数<code>reserve_seat()</code>简单直白清晰的放在旁边?</h3>
+</blockquote>
+
+<p><strong>&hellip;</strong></p>
+
+<p>希望 【我去图书馆】后台验证不要这么直接，能稍微完善一点；屏蔽掉外挂，让大家公平的抢座！</p>
+
+<p><strong>为了学习！</strong></p>
+
+<hr />
+
+<h1 id="最后">最后</h1>
+
+<p>文章发布即向我去图书馆的官方分享文章链接进行反馈</p>
+
+<p>工程部署到了微信 《<strong>为了学习</strong>》公众号，仅供体验测试，学习交流，服务启动中&hellip;
+<img src="https://img-blog.csdnimg.cn/20190722170049654.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L1JlbmppYUx1OTUyNw==,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述" /></p>
+
+<p>还有什么想说的请留言</p>
+
+<hr />
+
+<h1 id="参考链接">参考链接</h1>
+
+<ul>
+<li><strong>igotolibrary - github</strong> : [<a href="https://github.com/qmppz/igotolibrary">https://github.com/qmppz/igotolibrary</a>]</li>
+<li><strong>上一个版本【我去图书馆-抢座助手】:</strong><a href="https://blog.csdn.net/RenjiaLu9527/article/details/79871288">https://blog.csdn.net/RenjiaLu9527/article/details/79871288</a></li>
+<li><strong>sessionid 抓包与指令集帮助:</strong><a href="https://dwz.cn/DueaPBVD">https://dwz.cn/DueaPBVD </a></li>
+</ul>
+
+      </article>
+      
+    </main>
+    <nav class="end-nav side-padding">
+      
+      <a ontouchstart="cardPressed.call(this)" ontouchend="cardReleased.call(this)" ontouchmove="cardReleased.call(this)" 
+  href="http://coderzh.github.io/" class="card home-card" style="background-image: url( http://coderzh.github.io/img/grey-cloud.jpg )" rel="bookmark" >
+  Home
+</a>
+    </nav>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.13.1/highlight.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/katex.min.js" integrity="sha384-K3vbOmF2BtaVai+Qk37uypf7VrgBubhQreNQe9aGsz9lB63dIFiQVlJbr92dw2Lx" crossorigin="anonymous"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/contrib/auto-render.min.js" integrity="sha384-kmZOZB5ObwgQnS/DuDg6TScgOiWWBiVt0plIRkZCmE6rDZGrEOQeHM5PcHi+nyqe" crossorigin="anonymous"
+    onload="renderMathInElement(document.body);"></script>
+  
+  <script src="http://coderzh.github.io/js/core.min.js"></script>
+<script>
+  hljs.initHighlightingOnLoad();
+</script>
+
+  </body>
+</html>
